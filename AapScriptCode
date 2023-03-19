@@ -1,0 +1,20 @@
+function updateTopNews() {
+  let sheet = SpreadsheetApp.getActiveSheet();
+  
+  let url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=3fbeddfb8b474c858aded713acc19c9c";
+  
+  let response = UrlFetchApp.fetch(url);
+  let data = JSON.parse(response.getContentText());
+  let articles = data.articles.slice(0, 5);
+  
+  for (let i=0;i<articles.length;i++) 
+  {
+    let headline = articles[i].title;
+    let source = articles[i].source.name;
+    sheet.getRange(i+2, 1).setValue(headline);
+    sheet.getRange(i+2, 2).setValue(source);
+  }
+  
+}
+
+
